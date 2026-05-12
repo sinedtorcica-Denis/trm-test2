@@ -10,11 +10,9 @@ exports.handler = async function(event) {
       body: ''
     };
   }
-
   if (event.httpMethod !== 'POST') {
     return { statusCode: 405, body: 'Method Not Allowed' };
   }
-
   try {
     var body = JSON.parse(event.body);
     var prompt = body.prompt;
@@ -28,24 +26,27 @@ exports.handler = async function(event) {
         'anthropic-version': '2023-06-01'
       },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
+        model: 'claude-haiku-4-5-20251001',
         max_tokens: 1200,
         messages: [{ role: 'user', content: prompt }]
       })
     });
 
     var data = await response.json();
+    
+    // Log for debugging
+    var debugInfo = JSON.stringify(data).substring(0, 200);
+    
     var text = data.content && data.content[0] && data.content[0].text ? data.content[0].text : '';
-
+    
     return {
       statusCode: 200,
       headers: {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*'
       },
-      body: JSON.stringify({ text: text })
+      body: JSON.stringify({ text: text, debug: debugInfo })
     };
-
   } catch(err) {
     return {
       statusCode: 500,
