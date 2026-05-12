@@ -502,7 +502,7 @@ window.onload=function(){
 function downloadPDF(){
   var btn=document.querySelector('.pdf-btn');
   var originalHTML=btn.innerHTML;
-  btn.innerHTML='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Se generează...';
+  btn.innerHTML='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Se genereaza...';
   btn.disabled=true;
 
   var meta=getMeta();
@@ -510,27 +510,60 @@ function downloadPDF(){
   var today=new Date().toLocaleDateString('ro-RO',{day:'numeric',month:'long',year:'numeric'}).replace(/ /g,'_');
   var filename='Raport_Premium_'+name+'_'+today+'.pdf';
 
+  var styleId='pdf-light-override';
+  var s=document.createElement('style');
+  s.id=styleId;
+  s.textContent=
+    'body{background:#ffffff!important;color:#1a1a1a!important}'+
+    '.container{background:#ffffff!important}'+
+    '.dim-header{background:#f5f5f5!important}'+
+    '.dim-body{background:#fafafa!important;border-color:#e0e0e0!important}'+
+    '.summary-card{background:#f5f5f5!important;border-color:#e0e0e0!important}'+
+    '.nmg-card{background:#f5f5f5!important;border-color:#e0e0e0!important}'+
+    '.block-text{color:#333!important}'+
+    '.belief-text{color:#444!important}'+
+    '.nmg-conflict{color:#333!important}'+
+    '.trm-text{color:#444!important}'+
+    '.sec-sub{color:#555!important}'+
+    '.dim-header-info .dim-level{color:#666!important}'+
+    '.q-item{background:#f0f0f0!important;border-color:#ddd!important;color:#333!important}'+
+    '.write-note{color:#666!important;background:rgba(184,154,106,0.1)!important}'+
+    '.danger-box{background:rgba(200,80,42,0.05)!important;border-color:rgba(200,80,42,0.3)!important}'+
+    '.direction-box{background:rgba(74,144,96,0.05)!important;border-color:rgba(74,144,96,0.3)!important}'+
+    '.trm-box{background:rgba(200,80,42,0.04)!important;border-color:rgba(200,80,42,0.2)!important}'+
+    '.divider{background:#e0e0e0!important}'+
+    '.sum-bar-bg{background:#e0e0e0!important}'+
+    '.cover{border-color:#e0e0e0!important}'+
+    '.footer{color:#999!important}'+
+    '.disclaimer{background:#f5f5f5!important;border-color:#e0e0e0!important}'+
+    '.disclaimer p{color:#888!important}'+
+    '.nmg-lat{color:#888!important;border-color:#ddd!important}'+
+    '.cta-section{background:linear-gradient(135deg,rgba(200,80,42,0.06),rgba(184,154,106,0.04))!important}'+
+    '.pdf-btn-wrap{display:none!important}';
+  document.head.appendChild(s);
+
   var element=document.getElementById('mainContent');
   var opt={
-    margin:[10,10,10,10],
+    margin:[12,12,12,12],
     filename:filename,
-    image:{type:'jpeg',quality:0.97},
+    image:{type:'jpeg',quality:0.98},
     html2canvas:{
       scale:2,
       useCORS:true,
-      backgroundColor:'#08090a',
-      logging:false
+      backgroundColor:'#ffffff',
+      logging:false,
+      onclone:function(doc){doc.getElementById('mainContent').style.display='block';}
     },
     jsPDF:{unit:'mm',format:'a4',orientation:'portrait'},
     pagebreak:{mode:['avoid-all','css','legacy']}
   };
 
   html2pdf().set(opt).from(element).save().then(function(){
-    btn.innerHTML=originalHTML;
-    btn.disabled=false;
+    var el=document.getElementById(styleId);if(el)el.remove();
+    btn.innerHTML=originalHTML;btn.disabled=false;
   }).catch(function(){
-    btn.innerHTML=originalHTML;
-    btn.disabled=false;
+    var el=document.getElementById(styleId);if(el)el.remove();
+    btn.innerHTML=originalHTML;btn.disabled=false;
   });
 }
 </script>
