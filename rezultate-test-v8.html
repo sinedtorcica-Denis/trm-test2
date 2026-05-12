@@ -155,6 +155,9 @@ body{background:var(--bg);color:var(--white);font-family:'Segoe UI',system-ui,sa
 .nmg-ai-lock-text strong{color:var(--accent2)}
 .nmg-ai-lock-btn{display:inline-flex;align-items:center;gap:6px;background:var(--accent);color:white;border:none;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:700;transition:all 0.2s;white-space:nowrap;flex-shrink:0;cursor:pointer;font-family:inherit;text-decoration:none}
 .nmg-ai-lock-btn:hover{background:var(--accent2)}
+.nmg-ai-section-title{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--accent2);margin:14px 0 6px}
+.nmg-ai-list-item{font-size:13px;line-height:1.6;color:rgba(242,237,230,0.72);padding:3px 0 3px 8px}
+.nmg-ai-list-item::before{content:'';display:none}
 .nmg-lat-note{font-size:11px;color:var(--muted);padding:10px 20px 14px;border-top:1px solid var(--border);font-style:italic;line-height:1.5}
 
 /* NMG ENHANCED */
@@ -950,25 +953,37 @@ function loadNMGAnalysis(cardId, diseaseName, latText) {
   .catch(function() { showNMGError(cardId); });
 }
 
+function mdToHtml(text) {
+  return text
+    .replace(/^## (.+)$/gm, '<div class="nmg-ai-section-title">$1</div>')
+    .replace(/^# (.+)$/gm, '<div class="nmg-ai-section-title">$1</div>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    .replace(/^---$/gm, '')
+    .replace(/^- (.+)$/gm, '<div class="nmg-ai-list-item">→ $1</div>')
+    .replace(/^\d+\. (.+)$/gm, '<div class="nmg-ai-list-item">→ $1</div>')
+    .replace(/\n\n/g, '</p><p class="nmg-ai-text">')
+    .replace(/\n/g, '<br>');
+}
+
 function renderNMGAnalysis(cardId, text) {
   var loading = document.getElementById('loading-' + cardId);
   var contentDiv = document.getElementById('content-' + cardId);
   if (!loading || !contentDiv) return;
   loading.style.display = 'none';
 
-  // Split text at roughly 25% for free preview
-  var sentences = text.split(/(?<=[.!?])\s+/);
-  var splitAt = Math.max(3, Math.floor(sentences.length * 0.25));
-  var freeText = sentences.slice(0, splitAt).join(' ');
-  var lockedText = sentences.slice(splitAt).join(' ');
+  // Split at section boundary around 25%
+  var sections = text.split(/\n## /);
+  var freeCount = Math.max(1, Math.floor(sections.length * 0.3));
+  var freeText = sections.slice(0, freeCount).join('\n## ');
+  var lockedText = sections.slice(freeCount).join('\n## ');
+  if (lockedText) lockedText = '## ' + lockedText;
 
-  var html = '<div class="nmg-ai-content">';
-  html += '<div class="nmg-ai-text">' + freeText.replace(/\n/g, '<br>') + '</div>';
-  html += '</div>';
+  var html = '<div class="nmg-ai-content"><p class="nmg-ai-text">' + mdToHtml(freeText) + '</p></div>';
 
   if (lockedText) {
     html += '<div class="nmg-ai-blur-wrap">';
-    html += '<div class="nmg-ai-blur">' + lockedText.replace(/\n/g, '<br>') + '</div>';
+    html += '<div class="nmg-ai-blur"><p>' + mdToHtml(lockedText) + '</p></div>';
     html += '<div class="nmg-ai-blur-overlay"></div>';
     html += '</div>';
     html += '<div class="nmg-ai-lock">';
