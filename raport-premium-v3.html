@@ -77,17 +77,128 @@ body{background:var(--bg);color:var(--white);font-family:'Segoe UI',system-ui,sa
 .footer{text-align:center;padding:12px 0 32px;font-size:11px;color:rgba(122,112,96,0.5)}
 #loading{text-align:center;padding:80px 20px}
 #mainContent{display:none}
+@page{
+  margin: 15mm 12mm;
+  size: A4;
+}
 @media print{
-  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;color-adjust:exact!important}
-  body{background:#08090a!important;color:#f2ede6!important}
-  .pdf-btn-wrap,.pdf-btn{display:none!important}
-  .container{max-width:100%!important;padding:0 16px!important}
-  .summary-card,.dim-section,.dim-header,.dim-body,.nmg-card,.danger-box,.direction-box,.trm-box,.q-item,.belief-item,.disclaimer,.cta-section{page-break-inside:avoid!important;break-inside:avoid!important}
-  .dim-section{page-break-before:auto!important;break-before:auto!important;margin-bottom:24px!important}
-  .dim-header{border-radius:14px 14px 0 0!important}
-  .cover{page-break-after:always!important;break-after:always!important}
-  .divider{page-break-after:avoid!important;break-after:avoid!important}
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;box-sizing:border-box!important}
+  html{background:#ffffff!important}
+  body{background:#ffffff!important;color:#1a1a1a!important;font-family:'Segoe UI',Arial,sans-serif!important;font-size:11pt!important;margin:0!important;padding:0!important;min-height:0!important}
+  #loading{display:none!important}
+  #mainContent{display:block!important}
+  .container{background:#ffffff!important;max-width:100%!important;padding:0!important;margin:0!important;min-height:0!important}
+  .pdf-btn-wrap,.pdf-btn,.btn,.cta-section,.print-tip{display:none!important}
+  /* Cover - centrat ca o pagina de carte */
+  .cover{background:#ffffff!important;border:none!important;border-bottom:none!important;page-break-after:always!important;break-after:page!important;padding:0!important;margin:0!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;min-height:220mm!important;text-align:center!important}
+  .cover-logo{color:#b89a6a!important;font-size:10pt!important;letter-spacing:3px!important;margin-bottom:40px!important;display:block!important}
+  .cover-title{color:#1a1a1a!important;font-size:36pt!important;font-weight:900!important;line-height:1.1!important;margin-bottom:16px!important}
+  .cover-title em{color:#c8502a!important;font-style:italic!important;display:block!important;font-size:42pt!important}
+  .cover-name{color:#c8502a!important;font-size:18pt!important;font-weight:700!important;margin-top:32px!important;display:block!important}
+  .cover-date{color:#888!important;font-size:11pt!important;margin-top:8px!important;display:block!important}
+  /* Summary */
+  .sec-label{color:#b89a6a!important;font-size:8pt!important;letter-spacing:2px!important;text-transform:uppercase!important}
+  .sec-title{color:#1a1a1a!important;font-size:20pt!important;font-weight:800!important}
+  .sec-sub{color:#555!important;font-size:10pt!important}
+  .summary-grid{display:grid!important;grid-template-columns:1fr 1fr!important;gap:8px!important;margin-bottom:24px!important}
+  .summary-card{background:#f8f8f8!important;border:1px solid #e0e0e0!important;border-radius:8px!important;padding:10px 14px!important;page-break-inside:avoid!important;break-inside:avoid!important}
+  .sum-dim-name{color:#1a1a1a!important;font-weight:700!important;font-size:10pt!important}
+  .sum-level{color:#666!important;font-size:9pt!important}
+  .sum-score{color:#c8502a!important;font-weight:800!important;font-size:13pt!important}
+  .sum-bar-bg{background:#e8e8e8!important;border-radius:4px!important;height:4px!important}
+  .sum-bar-fill{background:#c8502a!important}
+  /* Dimensions */
+  .dim-section{page-break-inside:avoid!important;break-inside:avoid!important;margin-bottom:20px!important;border:1px solid #e0e0e0!important;border-radius:10px!important}
+  .dim-header{background:#f5f5f5!important;border-radius:10px 10px 0 0!important;padding:14px 18px!important;border-bottom:1px solid #e0e0e0!important}
+  .dim-name{color:#1a1a1a!important;font-weight:800!important;font-size:13pt!important}
+  .dim-level{color:#666!important;font-size:9pt!important}
+  .dim-body{background:#ffffff!important;padding:16px 18px!important}
+  .block-title{color:#1a1a1a!important;font-weight:700!important;font-size:9pt!important;letter-spacing:1.5px!important;text-transform:uppercase!important;margin-bottom:8px!important}
+  .block-text{color:#333!important;font-size:10pt!important;line-height:1.6!important}
+  .belief-list{list-style:none!important;padding:0!important;margin:0 0 8px 0!important}
+  .belief-item{background:#f5f5f5!important;border-left:3px solid #c8502a!important;padding:6px 10px!important;margin-bottom:5px!important;page-break-inside:avoid!important;break-inside:avoid!important;display:block!important}
+  .belief-dot{display:none!important}
+  .belief-text{color:#333!important;font-size:10pt!important;display:block!important}
+  .q-item{background:#f5f5f5!important;border:1px solid #e0e0e0!important;border-radius:6px!important;padding:8px 12px!important;margin-bottom:6px!important;color:#333!important;font-size:10pt!important;page-break-inside:avoid!important;break-inside:avoid!important}
+  .write-note{color:#888!important;font-style:italic!important;font-size:9pt!important}
+  .danger-box{background:#fff5f5!important;border:1px solid #f0c0c0!important;border-radius:8px!important;padding:12px 16px!important;margin:10px 0!important;page-break-inside:avoid!important;break-inside:avoid!important}
+  .danger-box .block-text{color:#c00!important}
+  .direction-box{background:#f0fff5!important;border:1px solid #a0d0b0!important;border-radius:8px!important;padding:12px 16px!important;margin:10px 0!important;page-break-inside:avoid!important;break-inside:avoid!important}
+  .direction-box .block-text{color:#1a6030!important}
+  .trm-box{background:#fff8f0!important;border:1px solid #f0d0a0!important;border-radius:8px!important;padding:12px 16px!important;margin:10px 0!important;page-break-inside:avoid!important;break-inside:avoid!important;font-style:italic!important}
+  .trm-text{color:#7a4000!important}
+  .nmg-card{background:#f8f8f8!important;border:1px solid #e0e0e0!important;border-radius:8px!important;padding:14px 16px!important;margin-bottom:10px!important;page-break-inside:avoid!important;break-inside:avoid!important}
+  .nmg-name{color:#1a1a1a!important;font-weight:700!important;font-size:11pt!important}
+  .nmg-cat{color:#b89a6a!important;font-size:8pt!important;letter-spacing:1px!important;text-transform:uppercase!important}
+  .nmg-conflict{color:#333!important;font-size:10pt!important;line-height:1.6!important}
+  .nmg-lat{color:#888!important;font-size:9pt!important;border-top:1px solid #e0e0e0!important;padding-top:8px!important;margin-top:8px!important}
+  .nmg-ai-content{color:#333!important;font-size:10pt!important;line-height:1.7!important}
+  .divider{background:#e0e0e0!important;height:1px!important;margin:16px 0!important;page-break-after:avoid!important;break-after:avoid!important}
   h1,h2,.sec-title,.dim-name,.block-title{page-break-after:avoid!important;break-after:avoid!important}
+  .disclaimer{background:#f8f8f8!important;border:1px solid #e0e0e0!important;border-radius:8px!important;padding:12px!important}
+  .disclaimer p{color:#888!important;font-size:9pt!important}
+  .footer{color:#aaa!important;font-size:9pt!important;text-align:center!important;padding:16px!important}
+  /* Hawkins chart - hide SVG complex elements that cause issues */
+  .hawkins-section{display:none!important}
+}
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;box-sizing:border-box!important}
+  html,body{background:#ffffff!important;color:#1a1a1a!important;font-family:'Segoe UI',Arial,sans-serif!important;font-size:11pt!important;margin:0!important;padding:0!important}
+  #loading{display:none!important}
+  #mainContent{display:block!important}
+  .container{background:#ffffff!important;max-width:100%!important;padding:0!important;margin:0!important}
+  .pdf-btn-wrap,.pdf-btn,.btn,.cta-section{display:none!important}
+  /* Cover */
+  .cover{background:#ffffff!important;border:none!important;border-bottom:2px solid #e0e0e0!important;page-break-after:always!important;break-after:page!important;padding:48px 24px!important;text-align:center!important}
+  .cover-logo{color:#b89a6a!important;font-size:10pt!important;letter-spacing:3px!important}
+  .cover-title{color:#1a1a1a!important;font-size:28pt!important;font-weight:900!important}
+  .cover-title em{color:#c8502a!important;font-style:italic!important}
+  .cover-name{color:#c8502a!important;font-size:16pt!important;font-weight:700!important}
+  .cover-date{color:#666!important;font-size:10pt!important}
+  /* Summary */
+  .sec-label{color:#b89a6a!important;font-size:8pt!important;letter-spacing:2px!important;text-transform:uppercase!important}
+  .sec-title{color:#1a1a1a!important;font-size:20pt!important;font-weight:800!important}
+  .sec-sub{color:#555!important;font-size:10pt!important}
+  .summary-grid{display:grid!important;grid-template-columns:1fr 1fr!important;gap:8px!important;margin-bottom:24px!important}
+  .summary-card{background:#f8f8f8!important;border:1px solid #e0e0e0!important;border-radius:8px!important;padding:10px 14px!important;page-break-inside:avoid!important;break-inside:avoid!important}
+  .sum-dim-name{color:#1a1a1a!important;font-weight:700!important;font-size:10pt!important}
+  .sum-level{color:#666!important;font-size:9pt!important}
+  .sum-score{color:#c8502a!important;font-weight:800!important;font-size:13pt!important}
+  .sum-bar-bg{background:#e8e8e8!important;border-radius:4px!important;height:4px!important}
+  .sum-bar-fill{background:#c8502a!important}
+  /* Dimensions */
+  .dim-section{page-break-inside:avoid!important;break-inside:avoid!important;margin-bottom:20px!important;border:1px solid #e0e0e0!important;border-radius:10px!important}
+  .dim-header{background:#f5f5f5!important;border-radius:10px 10px 0 0!important;padding:14px 18px!important;border-bottom:1px solid #e0e0e0!important}
+  .dim-name{color:#1a1a1a!important;font-weight:800!important;font-size:13pt!important}
+  .dim-level{color:#666!important;font-size:9pt!important}
+  .dim-body{background:#ffffff!important;padding:16px 18px!important}
+  .block-title{color:#1a1a1a!important;font-weight:700!important;font-size:9pt!important;letter-spacing:1.5px!important;text-transform:uppercase!important;margin-bottom:8px!important}
+  .block-text{color:#333!important;font-size:10pt!important;line-height:1.6!important}
+  /* BELIEF FIX - text was invisible */
+  .belief-list{list-style:none!important;padding:0!important;margin:0!important}
+  .belief-item{background:#f5f5f5!important;border-left:3px solid #c8502a!important;padding:6px 10px!important;margin-bottom:5px!important;page-break-inside:avoid!important;break-inside:avoid!important;display:block!important}
+  .belief-dot{display:none!important}
+  .belief-text{color:#333!important;font-size:10pt!important;display:block!important}
+  .q-item{background:#f5f5f5!important;border:1px solid #e0e0e0!important;border-radius:6px!important;padding:8px 12px!important;margin-bottom:6px!important;color:#333!important;font-size:10pt!important;page-break-inside:avoid!important;break-inside:avoid!important}
+  .write-note{color:#888!important;font-style:italic!important;font-size:9pt!important}
+  .danger-box{background:#fff5f5!important;border:1px solid #f0c0c0!important;border-radius:8px!important;padding:12px 16px!important;margin:10px 0!important;page-break-inside:avoid!important;break-inside:avoid!important}
+  .danger-box .block-text{color:#c00!important}
+  .direction-box{background:#f0fff5!important;border:1px solid #a0d0b0!important;border-radius:8px!important;padding:12px 16px!important;margin:10px 0!important;page-break-inside:avoid!important;break-inside:avoid!important}
+  .direction-box .block-text{color:#1a6030!important}
+  .trm-box{background:#fff8f0!important;border:1px solid #f0d0a0!important;border-radius:8px!important;padding:12px 16px!important;margin:10px 0!important;page-break-inside:avoid!important;break-inside:avoid!important;font-style:italic!important}
+  .trm-text{color:#7a4000!important}
+  /* NMG */
+  .nmg-card{background:#f8f8f8!important;border:1px solid #e0e0e0!important;border-radius:8px!important;padding:14px 16px!important;margin-bottom:10px!important;page-break-inside:avoid!important;break-inside:avoid!important}
+  .nmg-name{color:#1a1a1a!important;font-weight:700!important;font-size:11pt!important}
+  .nmg-cat{color:#b89a6a!important;font-size:8pt!important;letter-spacing:1px!important;text-transform:uppercase!important}
+  .nmg-conflict{color:#333!important;font-size:10pt!important;line-height:1.6!important}
+  .nmg-lat{color:#888!important;font-size:9pt!important;border-top:1px solid #e0e0e0!important;padding-top:8px!important;margin-top:8px!important}
+  .nmg-ai-content{color:#333!important;font-size:10pt!important;line-height:1.7!important}
+  /* Misc */
+  .divider{background:#e0e0e0!important;height:1px!important;margin:16px 0!important;page-break-after:avoid!important;break-after:avoid!important}
+  h1,h2,.sec-title,.dim-name,.block-title{page-break-after:avoid!important;break-after:avoid!important}
+  .disclaimer{background:#f8f8f8!important;border:1px solid #e0e0e0!important;border-radius:8px!important;padding:12px!important}
+  .disclaimer p{color:#888!important;font-size:9pt!important}
+  .footer{color:#aaa!important;font-size:9pt!important;text-align:center!important;padding:16px!important}
 }
 </style>
 </head>
@@ -125,6 +236,9 @@ body{background:var(--bg);color:var(--white);font-family:'Segoe UI',system-ui,sa
     </div>
     <div class="divider"></div>
     <div class="pdf-btn-wrap">
+      <div class="print-tip" style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:10px 16px;margin-bottom:12px;font-size:12px;color:rgba(242,237,230,0.6);line-height:1.6;text-align:center">
+        În dialogul de print → <strong style="color:rgba(242,237,230,0.85)">Mai multe setări</strong> → dezactivează <em>"Antete și subsoluri"</em> → Salvează ca PDF
+      </div>
       <button class="pdf-btn" onclick="downloadPDF()">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
         Descarcă raportul ca PDF
@@ -556,74 +670,18 @@ window.onload=async function(){
 };
 
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <script>
 function downloadPDF(){
-  var btn=document.querySelector('.pdf-btn');
-  var originalHTML=btn.innerHTML;
-  btn.innerHTML='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Se genereaza...';
-  btn.disabled=true;
-
-  var meta=getMeta();
-  var name=meta.name||'Raport';
-  var today=new Date().toLocaleDateString('ro-RO',{day:'numeric',month:'long',year:'numeric'}).replace(/ /g,'_');
-  var filename='Raport_Premium_'+name+'_'+today+'.pdf';
-
-  var styleId='pdf-light-override';
-  var s=document.createElement('style');
-  s.id=styleId;
-  s.textContent=
-    'body{background:#ffffff!important;color:#1a1a1a!important}'+
-    '.container{background:#ffffff!important}'+
-    '.dim-header{background:#f5f5f5!important}'+
-    '.dim-body{background:#fafafa!important;border-color:#e0e0e0!important}'+
-    '.summary-card{background:#f5f5f5!important;border-color:#e0e0e0!important}'+
-    '.nmg-card{background:#f5f5f5!important;border-color:#e0e0e0!important}'+
-    '.block-text{color:#333!important}'+
-    '.belief-text{color:#444!important}'+
-    '.nmg-conflict{color:#333!important}'+
-    '.trm-text{color:#444!important}'+
-    '.sec-sub{color:#555!important}'+
-    '.dim-header-info .dim-level{color:#666!important}'+
-    '.q-item{background:#f0f0f0!important;border-color:#ddd!important;color:#333!important}'+
-    '.write-note{color:#666!important;background:rgba(184,154,106,0.1)!important}'+
-    '.danger-box{background:rgba(200,80,42,0.05)!important;border-color:rgba(200,80,42,0.3)!important}'+
-    '.direction-box{background:rgba(74,144,96,0.05)!important;border-color:rgba(74,144,96,0.3)!important}'+
-    '.trm-box{background:rgba(200,80,42,0.04)!important;border-color:rgba(200,80,42,0.2)!important}'+
-    '.divider{background:#e0e0e0!important}'+
-    '.sum-bar-bg{background:#e0e0e0!important}'+
-    '.cover{border-color:#e0e0e0!important}'+
-    '.footer{color:#999!important}'+
-    '.disclaimer{background:#f5f5f5!important;border-color:#e0e0e0!important}'+
-    '.disclaimer p{color:#888!important}'+
-    '.nmg-lat{color:#888!important;border-color:#ddd!important}'+
-    '.cta-section{background:linear-gradient(135deg,rgba(200,80,42,0.06),rgba(184,154,106,0.04))!important}'+
-    '.pdf-btn-wrap{display:none!important}';
-  document.head.appendChild(s);
-
-  var element=document.getElementById('mainContent');
-  var opt={
-    margin:[12,12,12,12],
-    filename:filename,
-    image:{type:'jpeg',quality:0.98},
-    html2canvas:{
-      scale:2,
-      useCORS:true,
-      backgroundColor:'#ffffff',
-      logging:false,
-      onclone:function(doc){doc.getElementById('mainContent').style.display='block';}
-    },
-    jsPDF:{unit:'mm',format:'a4',orientation:'portrait'},
-    pagebreak:{mode:['avoid-all','css','legacy']}
-  };
-
-  html2pdf().set(opt).from(element).save().then(function(){
-    var el=document.getElementById(styleId);if(el)el.remove();
-    btn.innerHTML=originalHTML;btn.disabled=false;
-  }).catch(function(){
-    var el=document.getElementById(styleId);if(el)el.remove();
-    btn.innerHTML=originalHTML;btn.disabled=false;
-  });
+  // Show brief instruction then print
+  var btn = document.querySelector('.pdf-btn');
+  var orig = btn.innerHTML;
+  btn.innerHTML = '⏳ Se deschide dialogul de print...';
+  btn.disabled = true;
+  setTimeout(function(){
+    window.print();
+    btn.innerHTML = orig;
+    btn.disabled = false;
+  }, 300);
 }
 </script>
 </body>
