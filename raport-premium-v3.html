@@ -85,7 +85,8 @@ body{background:var(--bg);color:var(--white);font-family:'Segoe UI',system-ui,sa
   #mainContent{display:block!important}
   .container{background:#ffffff!important;max-width:100%!important;padding:0!important;margin:0 auto!important;min-height:0!important}
   .pdf-btn-wrap,.pdf-btn,.btn,.cta-section{display:none!important}
-  .cover{background:#ffffff!important;border-bottom:none!important;page-break-after:always!important;break-after:page!important;min-height:240mm!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;text-align:center!important;padding:0!important;margin:0!important}
+  .cover{background:#ffffff!important;border-bottom:2px solid #e8e8e8!important;page-break-after:always!important;break-after:page!important;display:block!important;text-align:center!important;padding:72mm 20mm 48mm!important;margin:0!important}
+  .cover h1,.cover-title{color:#1a1a1a!important;display:block!important;visibility:visible!important}
   .cover-logo{color:#b89a6a!important;font-size:10pt!important;letter-spacing:3px!important;display:block!important;margin-bottom:48px!important}
   .cover-title{color:#1a1a1a!important;font-size:34pt!important;font-weight:900!important;line-height:1.1!important;margin-bottom:12px!important}
   .cover-title em{color:#c8502a!important;font-style:italic!important;display:block!important;font-size:40pt!important}
@@ -131,6 +132,8 @@ body{background:var(--bg);color:var(--white);font-family:'Segoe UI',system-ui,sa
   .disclaimer p{color:#888!important;font-size:9pt!important}
   .footer{color:#aaa!important;font-size:9pt!important;text-align:center!important}
   .hawkins-section{display:none!important}
+  body{min-height:0!important}
+  #mainContent > div:last-child{page-break-after:avoid!important;break-after:avoid!important}
 }
 </style>
 </head>
