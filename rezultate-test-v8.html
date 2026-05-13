@@ -589,6 +589,12 @@ var LEVEL_COLORS = ["","#904060","#c8502a","#b89a6a","#4a9060","#3a7090","#b89a6
 function parseScores() {
   var params = new URLSearchParams(window.location.search);
   var sc = params.get('sc') || '';
+
+  // If no sc in URL, try sessionStorage fallback (mobile tab reload)
+  if (!sc) {
+    try { sc = sessionStorage.getItem('trm_sc') || ''; } catch(e) {}
+  }
+
   var scores = {};
   var parts = sc.split('_');
   var keyMap = {fi:'financiar',re:'relational',si:'sine',sc:'scop',co:'corp',mi:'minte',li:'libertate',sp:'spiritualitate'};
@@ -605,11 +611,24 @@ function parseScores() {
 
 function parseMeta() {
   var params = new URLSearchParams(window.location.search);
+  var nm = params.get('nm');
+  var sx = params.get('sx');
+  var lt = params.get('lt');
+  var ds = params.get('ds');
+
+  // If no URL params, try sessionStorage fallback (mobile tab reload)
+  if (!nm) {
+    try {
+      var saved = JSON.parse(sessionStorage.getItem('trm_meta') || 'null');
+      if (saved) return saved;
+    } catch(e) {}
+  }
+
   return {
-    name: decodeURIComponent(params.get('nm') || 'Prietene'),
-    sex: params.get('sx') || 'M',
-    lat: params.get('lt') || 'D',
-    diseases: (params.get('ds') || '').split(',').filter(Boolean).map(decodeURIComponent)
+    name: decodeURIComponent(nm || 'Prietene'),
+    sex: sx || 'M',
+    lat: lt || 'D',
+    diseases: (ds || '').split(',').filter(Boolean).map(decodeURIComponent)
   };
 }
 
@@ -1010,6 +1029,28 @@ window.onload = function() {
   window.currentScores = scores;
   var meta = parseMeta();
   var overall = calcOverall(scores);
+
+  // Save to sessionStorage for mobile tab reload recovery
+  try {
+    var params = new URLSearchParams(window.location.search);
+    if (params.get('sc')) {
+      sessionStorage.setItem('trm_sc', params.get('sc'));
+      sessionStorage.setItem('trm_meta', JSON.stringify(meta));
+    }
+  } catch(e) {}
+
+  // Fix 1: Detect payment from URL and unlock NMG
+  var urlParams = new URLSearchParams(window.location.search);
+  var isPaid = urlParams.get('paid') === 'true' || urlParams.get('payment_intent') || urlParams.get('session_id');
+  if (isPaid) {
+    window.nmgPaid = true;
+    var arrowEl = document.getElementById('nmgArrowIndicator');
+    if (arrowEl) arrowEl.style.display = 'block';
+    setTimeout(function() {
+      var nmgEl = document.getElementById('nmgSection');
+      if (nmgEl) nmgEl.scrollIntoView({behavior:'smooth', block:'start'});
+    }, 800);
+  }
 
   document.getElementById('greetName').textContent = meta.name;
   buildHawkinsChart(overall);
