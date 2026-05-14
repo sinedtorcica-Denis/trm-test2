@@ -162,6 +162,8 @@ body{background:var(--bg);color:var(--white);font-family:'Segoe UI',system-ui,sa
 
 /* BUTTON */
 .btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:16px 28px;background:var(--accent);color:#fff;border:none;border-radius:12px;font-family:inherit;font-size:16px;font-weight:700;cursor:pointer;letter-spacing:0.3px;transition:all 0.2s}
+.btn-back{display:flex;align-items:center;justify-content:center;gap:8px;padding:16px 20px;background:transparent;color:var(--muted);border:1px solid var(--border);border-radius:12px;font-family:inherit;font-size:15px;font-weight:600;cursor:pointer;transition:all 0.2s;white-space:nowrap}
+.btn-back:hover{color:var(--white);border-color:var(--white)}
 .btn:hover{background:var(--accent2);transform:translateY(-2px);box-shadow:0 10px 30px rgba(200,80,42,0.35)}
 .btn:disabled{opacity:0.28;cursor:not-allowed;transform:none;box-shadow:none}
 .divider{height:1px;background:var(--border);margin:40px 0}
@@ -344,10 +346,16 @@ body{background:var(--bg);color:var(--white);font-family:'Segoe UI',system-ui,sa
       <div class="q-text" id="qText"></div>
       <div class="q-hint">Răspunde sincer — nu există răspunsuri corecte sau greșite.</div>
       <div class="opts" id="opts"></div>
-      <button class="btn" id="nextBtn" onclick="nextQ()" disabled>
-        Continuă
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </button>
+      <div style="display:flex;gap:12px;align-items:center">
+        <button class="btn-back" id="backBtn" onclick="prevQ()" style="display:none">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          Înapoi
+        </button>
+        <button class="btn" id="nextBtn" onclick="nextQ()" disabled style="flex:1">
+          Continuă
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
     </div>
   </div>
 
@@ -657,7 +665,7 @@ var QUESTIONS = {
       "Am pus-o, dar mi-a fost teama de reactia lor.",
       "Am pus-o confortabil — e normal sa am granite.",
       "Granitele mele sunt clare si consecvente."], sc:[1,1,2,4,5]},
-    {q:"Cand ai simtit ca cineva drag te dezamarea, ce ai facut?", opts:["Am tacut si am inghitit — nu am spus nimic.",
+    {q:"Cand cineva drag te-a dezamagit, cum ai reactionat?", opts:["Am tacut si am inghitit — nu am spus nimic.",
       "M-am retras emotional si am devenit distant.",
       "Am explodat la un moment dat dupa ce s-a acumulat.",
       "Am comunicat disconfortul, chiar daca era greu.",
@@ -686,11 +694,11 @@ var QUESTIONS = {
       "Incerc sa mediez, dar evit sa spun ce simt cu adevarat.",
       "Comunic nevoile mele clar, chiar daca e incomod.",
       "Raman calm si pot mentine conexiunea chiar si in conflict."], sc:[1,2,2,4,5]},
-    {q:"Gandeste-te la cea mai toxica relatie pe care ai avut-o. De ce ai ramas atat de mult?", opts:["Din frica de singuratate.",
-      "Din convingerea ca nu merit mai mult.",
-      "Din speranta ca se va schimba.",
-      "Nu am ramas — am plecat cand am realizat ca nu e sanatos.",
-      "Nu am avut o relatie cu adevarat toxica."], sc:[1,1,2,4,5]},
+    {q:"In relatiile importante din viata ta, cat de mult esti tu insuti — fara roluri sau masti?", opts:["Aproape deloc — joc mereu un rol pentru a fi acceptat.",
+      "Partial — cu unii oameni, in anumite momente.",
+      "In mare parte da, dar inca am zone in care ma ascund.",
+      "Da, in relatiile sanatoase sunt autentic.",
+      "Complet — sunt eu insumi indiferent de context."], sc:[1,2,3,4,5]},
     {q:"Cat de des iti exprimi recunostinta sau aprecierea fata de oamenii importanti din viata ta?", opts:["Rar sau deloc — nu e stilul meu.",
       "Uneori, cand simt ca trebuie.",
       "Des — e important pentru mine sa o fac.",
@@ -730,12 +738,12 @@ var QUESTIONS = {
       "M-am simtit bine, dar m-am gandit ca exagereaza.",
       "L-am primit cu placere.",
       "L-am integrat si mi-a confirmat ce stiam deja."], sc:[1,2,3,5]},
-    {q:"Ce faci cand simti ca esti coplesit sau prea mult pentru tine?", opts:["Ma izoleze sau cad in obiceiuri proaste.",
-      "Ingheat sau procrastinez.",
+    {q:"Ce faci cand simti ca esti coplesit sau prea mult pentru tine?", opts:["Ma izolez sau cad in obiceiuri proaste.",
+      "Inghet si aman tot.",
       "Caut distrageri — telefon, mancare, serial.",
       "Iau o pauza constienta si ma reincarc.",
       "Am practici clare care ma aduc inapoi la mine."], sc:[1,2,2,3,5]},
-    {q:"Cat de confortabil esti cu imperfectiunea ta?", opts:["Imi este rusine cu defectele mele si le ascund.",
+    {q:"Cum te raportezi la greselile si defectele tale?", opts:["Imi este rusine cu defectele mele si le ascund.",
       "Le accept partial, dar ma deranjeaza cand le vede cineva.",
       "Le accept — fac parte din mine.",
       "Le vad ca puncte de crestere, nu ca esecuri.",
@@ -743,7 +751,7 @@ var QUESTIONS = {
     {q:"Cum arata monologul tau interior in zilele grele?", opts:["Dur si critic — ma ataca constant.",
       "Pesimist — totul e greu si nu se va schimba.",
       "Fluctuant — uneori bun, uneori foarte dur.",
-      "Realist, dar fara sa ma distrug.",
+      "Realist, dar fara asa multa sustinere.",
       "Suportiv — ca un prieten bun cu mine."], sc:[1,1,2,3,5]},
     {q:"Cat de mult din deciziile tale sunt influentate de ce cred sau ce vor altii?", opts:["Majoritate — traiesc dupa asteptarile altora.",
       "Mult — mi-e frica de judecata.",
@@ -818,12 +826,12 @@ var QUESTIONS = {
       "Scopul meu e trait zilnic, nu doar formulat."], sc:[1,2,3,4,5]},
     {q:"Cum te raportezi la a cere ajutor sau a delega?", opts:["Fac totul singur — nu am incredere sau mi-e jena sa cer.",
       "Cer ajutor rar si cu dificultate.",
-      "Cer si deleghez confortabil cand e nevoie.",
+      "Cer si deleg confortabil cand e nevoie.",
       "Am construit sisteme si echipe care amplifica ce fac."], sc:[1,2,4,5]},
-    {q:"Contributia ta — cum arata fata de ce simti ca ai putea da cu adevarat?", opts:["Dau mult mai putin decat as putea.",
-      "Dau cat pot in contextul actual.",
-      "Dau din plin si continuu sa cresc capacitatea.",
-      "Contributia mea e maxima si sustenabila."], sc:[2,3,4,5]}
+    {q:"Cat din potentialul tau crezi ca il folosesti cu adevarat in ceea ce faci?", opts:["Foarte putin — sunt mult sub ce pot.",
+      "Partial — mai am mult nefolosit.",
+      "Decent — dar stiu ca pot mai mult.",
+      "La capacitate maxima si continuu sa cresc."], sc:[2,3,4,5]}
   ],
   corp: [
     {q:"Cum ai descrie nivelul tau de energie de zi cu zi in ultimele 3 luni?", opts:["Epuizat constant — ma trezesc obosit.",
@@ -840,17 +848,16 @@ var QUESTIONS = {
       "Haotic — nu are o rutina sau grija fata de ce mananca.",
       "Ok — incearca sa manance sanatos, cu exceptii.",
       "Constienta — mancarea e combustibil si placere echilibrata."], sc:[1,2,3,5]},
-    {q:"Cat de des faci miscare fizica intentionata?", opts:["Aproape niciodata.",
-      "Rar — cand ma simt vinovat sau e o ocazie speciala.",
+    {q:"Cat de des faci miscare fizica intentionata?", opts:["Niciodata intentionat.",
       "Cateva ori pe luna, inconsistent.",
-      "De 2-3 ori pe saptamana, constant.",
-      "Zilnic — e o parte din identitatea mea."], sc:[1,1,2,4,5]},
+      "De 3-4 ori pe saptamana.",
+      "De 6-7 ori pe saptamana — e parte din identitatea mea."], sc:[1,2,4,5]},
     {q:"Cum dormi in mod obisnuit?", opts:["Prost — adorm greu, ma trezesc noaptea, simt ca nu ma odihnesc.",
       "Variabil — depinde de stres.",
       "Acceptabil — nu e grozav dar nu e catastrofa.",
       "Bine — am un ritm si ma odihnesc."], sc:[1,2,3,5]},
     {q:"Stresul — cum se manifesta in corpul tau?", opts:["Tensiune, dureri fizice, probleme digestive frecvente.",
-      "Anxietate fizica — inima, respiratie, transpiratieinte.",
+      "Anxietate fizica — inima, respiratie, transpiratie.",
       "Oboseala si retragere.",
       "Il simt, dar am metode sa il gestionez.",
       "Rareori se instaleaza — am un echilibru constant."], sc:[1,1,2,3,5]},
@@ -870,7 +877,7 @@ var QUESTIONS = {
     {q:"Corpul tau — cum il percepi?", opts:["O sursa de rusine sau frustrare.",
       "Ceva de indurat sau de controlat.",
       "Un instrument functional.",
-      "Un partener de viata care merita grija si respect."], sc:[1,2,3,5]}
+      "Este templul meu pe care il tin maxim de sanatos."], sc:[1,2,3,5]}
   ],
   minte: [
     {q:"Gandurile negative — cat de des ti-au dominat ziua in ultima saptamana?", opts:["Aproape in fiecare zi.",
@@ -980,7 +987,7 @@ var QUESTIONS = {
       "E starea mea de fundal, indiferent de circumstante."], sc:[1,2,3,5]}
   ],
   spiritualitate: [
-    {q:"Cand gandesti la viata ta ca intreg — ce sentiment predomina?", opts:["Ca e accidentala si fara sens profund.",
+    {q:"Cand te uiti la viata ta in ansamblu, ce simti cel mai des?", opts:["Ca e accidentala si fara sens profund.",
       "Ca am ratat sau pierdut timp pretios.",
       "Ca e in curs de construire.",
       "Ca are un fir rosu si un sens care se dezvaluie.",
@@ -1074,6 +1081,13 @@ function renderQ() {
   document.getElementById('progFill').style.width = ((qIdx / total) * 100) + '%';
   selOpt = null;
   document.getElementById('nextBtn').disabled = true;
+  // Show/hide back button
+  var backBtn = document.getElementById('backBtn');
+  if (dimIdx === 0 && qIdx === 0) {
+    backBtn.style.display = 'none';
+  } else {
+    backBtn.style.display = 'flex';
+  }
   var c = document.getElementById('opts');
   c.innerHTML = '';
   q.opts.forEach(function(opt, i) {
@@ -1089,6 +1103,30 @@ function renderQ() {
     d.onclick = (function(idx, el) { return function() { pickOpt(idx, el); }; })(i, d);
     c.appendChild(d);
   });
+}
+
+function prevQ() {
+  // Remove last answer from log and scores
+  if (answerLog.length === 0) return;
+  var last = answerLog.pop();
+  var dim = DIMS[dimIdx];
+  // Go back one question
+  if (qIdx > 0) {
+    qIdx--;
+  } else if (dimIdx > 0) {
+    dimIdx--;
+    qIdx = QUESTIONS[DIMS[dimIdx].key].length - 1;
+  } else {
+    return;
+  }
+  // Recalculate score for current dim by replaying log
+  var dimKey = DIMS[dimIdx].key;
+  scores[dimKey] = 0;
+  answerLog.forEach(function(a) {
+    if (a.dim === DIMS[dimIdx].label) scores[dimKey] += a.sc;
+  });
+  show('s-q');
+  renderQ();
 }
 
 function pickOpt(i, el) {
@@ -1270,6 +1308,29 @@ function submitTest() {
     console.log('EmailJS SUCCESS', response.status, response.text);
   }).catch(function(error) {
     console.log('EmailJS ERROR', JSON.stringify(error));
+  });
+
+  // Send admin notification email via EmailJS
+  emailjs.send('service_dsqz8gi', 'template_tw65ofs', {
+    to_email: 'denisrostrm@gmail.com',
+    admin_name: userData.name,
+    admin_email: userData.email,
+    admin_phone: userData.phone || 'N/A',
+    admin_sex: userData.sex === 'M' ? 'Masculin' : 'Feminin',
+    admin_age: userData.age || 'N/A',
+    admin_lat: userData.lat === 'D' ? 'Dreptaci' : (userData.lat === 'S' ? 'Stângaci' : 'Ambidextru'),
+    admin_diseases: userData.diseases && userData.diseases.length ? userData.diseases.join(', ') : 'Niciuna',
+    admin_scores: scoreParam.split('_').map(function(s) {
+      var keyMap = {fi:'Financiar',re:'Relații',si:'Sine & Identitate',sc:'Scop & Carieră',co:'Corp & Sănătate',mi:'Minte & Emoții',li:'Libertate Interioară',sp:'Spiritualitate & Sens'};
+      var prefix = s.substring(0,2);
+      var val = s.substring(2);
+      return (keyMap[prefix] || prefix) + ': ' + val + '/6';
+    }).join(' | '),
+    admin_link: redirectURL
+  }).then(function(response) {
+    console.log('EmailJS ADMIN SUCCESS', response.status, response.text);
+  }).catch(function(error) {
+    console.log('EmailJS ADMIN ERROR', JSON.stringify(error));
   });
 
   // Redirect after short delay
