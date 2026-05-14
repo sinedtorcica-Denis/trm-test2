@@ -1277,27 +1277,6 @@ function submitTest() {
   localStorage.setItem('trm_meta', JSON.stringify({name: userData.name, sex: sexParam, lat: latParam, diseases: disParam}));
 
   var redirectURL = 'https://test-nivelul-constiintei.netlify.app/rezultate-test-v8.html?sc=' + scoreParam + '&nm=' + nameParam + '&sx=' + sexParam + '&lt=' + latParam + '&ds=' + disParam;
-  // Send to Formspree via fetch - no redirect interference
-  var formData = new FormData();
-  formData.append('_subject', 'Test Nivelul Constiintei — Rezultat nou');
-  formData.append('Nume', userData.name);
-  formData.append('Email', userData.email);
-  formData.append('_replyto', userData.email);
-  formData.append('Telefon', userData.phone);
-  formData.append('Sex', userData.sex);
-  formData.append('Varsta', userData.age);
-  formData.append('Lateralitate', userData.lat);
-  formData.append('Afectiuni_NMG', disText);
-  formData.append('Scoruri', scoresText);
-  formData.append('Raspunsuri', answersText);
-  formData.append('Link_Rezultate', redirectURL);
-
-  // Send to Formspree (for your records)
-  fetch('https://formspree.io/f/xdabdpdn', {
-    method: 'POST',
-    body: formData,
-    headers: { 'Accept': 'application/json' }
-  });
 
   // Send beautiful email to client via EmailJS
   emailjs.send('service_dsqz8gi', 'template_nkxwcfn', {
