@@ -1237,11 +1237,14 @@ function selectRadio(group, val, el) {
   el.classList.add('sel');
 }
 
+var submitInProgress = false;
 function submitTest() {
+  if (submitInProgress) return;
+  submitInProgress = true;
   var name = document.getElementById('inp-name').value.trim();
   var email = document.getElementById('inp-email').value.trim();
-  if (!name) { alert('Te rog introdu prenumele și numele.'); return; }
-  if (!email || !email.includes('@')) { alert('Te rog introdu un email valid.'); return; }
+  if (!name) { submitInProgress = false; alert('Te rog introdu prenumele și numele.'); return; }
+  if (!email || !email.includes('@')) { submitInProgress = false; alert('Te rog introdu un email valid.'); return; }
   userData = {
     name: name, email: email,
     phone: (document.getElementById('inp-prefix').value || '') + (document.getElementById('inp-phone').value || ''),
@@ -1276,7 +1279,7 @@ function submitTest() {
   localStorage.setItem('trm_scores', scoreParam);
   localStorage.setItem('trm_meta', JSON.stringify({name: userData.name, sex: sexParam, lat: latParam, diseases: disParam}));
 
-  var redirectURL = 'https://test-nivelul-constiintei.netlify.app/rezultate-test-v8.html?sc=' + scoreParam + '&nm=' + nameParam + '&sx=' + sexParam + '&lt=' + latParam + '&ds=' + disParam;
+  var redirectURL = 'https://test-nivelul-constiintei.netlify.app/rezultate-test-v8.html?sc=' + scoreParam + '&nm=' + nameParam + '&sx=' + sexParam + '&la=' + latParam + '&ds=' + disParam;
 
   // Send beautiful email to client via EmailJS
   emailjs.send('service_dsqz8gi', 'template_nkxwcfn', {
