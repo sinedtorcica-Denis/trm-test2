@@ -1279,13 +1279,14 @@ function submitTest() {
   localStorage.setItem('trm_scores', scoreParam);
   localStorage.setItem('trm_meta', JSON.stringify({name: userData.name, sex: sexParam, lat: latParam, diseases: disParam}));
 
-  var redirectURL = 'https://test-nivelul-constiintei.netlify.app/rezultate-test-v8.html?sc=' + scoreParam + '&nm=' + nameParam + '&sx=' + sexParam + '&la=' + latParam + '&ds=' + disParam;
+  var redirectURL = 'https://test-nivelul-constiintei.netlify.app/rezultate-test-v8.html?sc=' + scoreParam + '&nm=' + nameParam + '&sx=' + sexParam + '&la=' + latParam + (disParam ? '&ds=' + disParam : '');
+  var emailURL = redirectURL.replace(/&/g, '&amp;');
 
   // Send beautiful email to client via EmailJS
   emailjs.send('service_dsqz8gi', 'template_nkxwcfn', {
     to_email: userData.email,
     name: userData.name.split(' ')[0],
-    results_link: redirectURL
+    results_link: emailURL
   }).then(function(response) {
     console.log('EmailJS SUCCESS', response.status, response.text);
   }).catch(function(error) {
@@ -1308,7 +1309,7 @@ function submitTest() {
       var val = s.substring(2);
       return (keyMap[prefix] || prefix) + ': ' + val + '/6';
     }).join(' | '),
-    admin_link: redirectURL
+    admin_link: emailURL
   }).then(function(response) {
     console.log('EmailJS ADMIN SUCCESS', response.status, response.text);
   }).catch(function(error) {
