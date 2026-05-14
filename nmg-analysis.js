@@ -34,7 +34,7 @@ exports.handler = async function(event) {
         model: 'claude-sonnet-4-20250514',
         max_tokens: 2000,
         messages: [{ role: 'user', content: prompt }],
-        system: 'Esti un specialist NMG. Raspunde DOAR in limba romana. Foloseste DOAR caractere ASCII simple: cratima (-) in loc de linie de pauza, ghilimele drepte ("") in loc de cele cursive, apostrofe drepte (\') in loc de cele cursive. Nu folosi caractere speciale unicode precum \u2014 \u2013 \u2018 \u2019 \u201c \u201d \u2026. Scrie clar si profesional.'
+        system: 'Esti un specialist NMG. Raspunde DOAR in limba romana. Foloseste DOAR caractere ASCII simple: cratima (-) in loc de linie de pauza, ghilimele drepte ("") in loc de cele cursive, apostrofe drepte (\') in loc de cele cursive. Nu folosi caractere speciale unicode precum \u2014 \u2013 \u2018 \u2019 \u201c \u201d \u2026. Scrie clar si profesional. IMPORTANT: Nu recomanda niciodata nimic la final — nici consultatii, nici specialisti, nici produse, nici servicii. Opreste-te strict la analiza NMG solicitata. Nu adauga nicio sectiune de recomandari, concluzii sau pasi urmatori dupa analiza.'
       }),
       signal: controller.signal
     });
